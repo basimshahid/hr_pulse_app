@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56302545114",
+    "project_id": "hr-pulse-app",
+    "storage_bucket": "hr-pulse-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56302545114:android:fbb660f4afc31184bf5de3",
+        "android_client_info": {
+          "package_name": "com.company.hrpulseapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9ZbDqtcSBkH-KAjTfB3jEmBkA_Z42Ohg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
