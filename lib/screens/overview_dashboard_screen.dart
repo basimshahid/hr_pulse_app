@@ -167,21 +167,35 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
 
             Text("Monthly Leave Trends", style: theme.textTheme.titleMedium),
             SizedBox(height: 12),
-            SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              series: <CartesianSeries>[
-                LineSeries<ChartData, String>(
-                  dataSource:
-                      leaveTrends.entries
-                          .map((e) => ChartData(e.key, e.value))
-                          .toList(),
-                  xValueMapper: (d, _) => d.label,
-                  yValueMapper: (d, _) => d.value,
-                  color: theme.colorScheme.secondary,
-                  markerSettings: MarkerSettings(isVisible: true),
+            leaveTrends.length < 2
+                ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.info_outline, size: 48, color: Colors.grey),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Not enough data to display trends.",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                )
+                : SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  series: <CartesianSeries>[
+                    LineSeries<ChartData, String>(
+                      dataSource:
+                          leaveTrends.entries
+                              .map((e) => ChartData(e.key, e.value))
+                              .toList(),
+                      xValueMapper: (d, _) => d.label,
+                      yValueMapper: (d, _) => d.value,
+                      color: theme.colorScheme.secondary,
+                      markerSettings: MarkerSettings(isVisible: true),
+                    ),
+                  ],
                 ),
-              ],
-            ),
 
             SizedBox(height: 30),
 

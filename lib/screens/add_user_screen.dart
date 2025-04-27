@@ -31,7 +31,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         'department': deptController.text.trim(),
         'role': role,
         'lateCount': 0,
-        'leaveBalance': {'annual': 12, 'sick': 5, 'withoutPay': 0},
+        'leaveBalance': {'annual': 20, 'sick': 10, 'withoutPay': 5},
         'benefits': {
           'healthInsurance': hasInsurance,
           'otherBenefit': benefitOtherController.text.trim(),

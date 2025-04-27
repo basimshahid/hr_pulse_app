@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hr_pulse_app/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -39,6 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
         final doc = snapshot.docs.first;
         final role = doc['role'];
         final userId = doc.id;
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userId', userId);
+        await prefs.setString('role', role);
 
         Navigator.pushReplacement(
           context,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:hr_pulse_app/screens/home_screen.dart';
 import 'package:hr_pulse_app/screens/login_screen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hr_pulse_app/service/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -22,7 +24,12 @@ void main() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   await Firebase.initializeApp();
 
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  String? userId = prefs.getString('userId');
+  String? role = prefs.getString('role');
+
+  runApp(MyApp(isLoggedIn: isLoggedIn, userId: userId, role: role));
 }
 
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -38,14 +45,19 @@ void main() async {
 // }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.isLoggedIn, this.userId, this.role});
+
+  final bool isLoggedIn;
+  final String? userId;
+  final String? role;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.theme,
-      home: LoginScreen(),
+      home:
+          isLoggedIn ? HomeScreen(userId: userId!, role: role!) : LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

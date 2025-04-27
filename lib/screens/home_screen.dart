@@ -6,6 +6,7 @@ import 'package:hr_pulse_app/screens/employee_dashboard_screen.dart';
 import 'package:hr_pulse_app/screens/employee_directory_screen.dart';
 import 'package:hr_pulse_app/screens/login_screen.dart';
 import 'package:hr_pulse_app/screens/overview_dashboard_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // class HomeScreen extends StatelessWidget {
 //   final String userId;
@@ -189,7 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     List<Map<String, dynamic>> options = [];
 
-    void logoutUser() {
+    void logoutUser() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (ctx) => LoginScreen()),
