@@ -79,7 +79,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header Card
                     Card(
                       elevation: 3,
                       shape: RoundedRectangleBorder(
@@ -105,7 +104,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
 
                     SizedBox(height: 24),
 
-                    // Attendance Summary Chart
                     Text(
                       "Attendance Summary",
                       style: theme.textTheme.titleMedium,
@@ -133,7 +131,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
 
                     SizedBox(height: 24),
 
-                    // Leave Balance Section
                     Text("Leave Balance", style: theme.textTheme.titleMedium),
                     SizedBox(height: 12),
                     Card(

@@ -50,7 +50,6 @@ class EmployeeProfileScreen extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-                // Basic Info
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -78,7 +77,6 @@ class EmployeeProfileScreen extends StatelessWidget {
 
                 SizedBox(height: 30),
 
-                // Leave Balance
                 Text("Leave Balance", style: theme.textTheme.titleMedium),
                 SizedBox(height: 4),
                 Card(
@@ -116,7 +114,6 @@ class EmployeeProfileScreen extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-                // Benefits
                 Text("Benefits", style: theme.textTheme.titleMedium),
                 SizedBox(height: 4),
                 Card(

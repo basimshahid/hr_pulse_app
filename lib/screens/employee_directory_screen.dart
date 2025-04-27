@@ -36,7 +36,6 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
             ),
           ),
 
-          // Filter Chips
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Wrap(

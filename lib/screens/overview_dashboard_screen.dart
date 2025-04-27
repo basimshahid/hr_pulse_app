@@ -107,7 +107,6 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Summary Section
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -144,7 +143,6 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
 
             SizedBox(height: 30),
 
-            // Chart: Late per department
             Text(
               "Late Count by Department",
               style: theme.textTheme.titleMedium,
@@ -167,7 +165,6 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
 
             SizedBox(height: 30),
 
-            // Chart: Leave Trends
             Text("Monthly Leave Trends", style: theme.textTheme.titleMedium),
             SizedBox(height: 12),
             SfCartesianChart(
@@ -188,7 +185,6 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
 
             SizedBox(height: 30),
 
-            // Export Buttons
             Row(
               children: [
                 Expanded(

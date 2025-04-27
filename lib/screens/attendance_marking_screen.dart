@@ -170,7 +170,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Select Users
                     Text(
                       "Select Employees",
                       style: theme.textTheme.titleMedium,
@@ -199,7 +198,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
                     ),
                     SizedBox(height: 30),
 
-                    // Select Dates
                     Text("Select Dates", style: theme.textTheme.titleMedium),
                     SizedBox(height: 10),
                     ElevatedButton.icon(
@@ -230,7 +228,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
                       ),
                     SizedBox(height: 30),
 
-                    // Status Dropdown
                     Text(
                       "Attendance Status",
                       style: theme.textTheme.titleMedium,
@@ -272,7 +269,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
                     ],
                     SizedBox(height: 40),
 
-                    // Submit Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
