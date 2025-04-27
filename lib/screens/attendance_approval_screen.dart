@@ -119,9 +119,57 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                                           Icons.close,
                                           color: Colors.red,
                                         ),
-                                        onPressed:
-                                            () => updateApproval(doc.id, false),
-                                        tooltip: "Reject",
+                                        onPressed: () async {
+                                          bool confirm = await showDialog(
+                                            context: context,
+                                            builder:
+                                                (context) => AlertDialog(
+                                                  title: const Text(
+                                                    'Cancel Confirmation',
+                                                  ),
+                                                  content: const Text(
+                                                    'Are you sure you want to cancel this attendance request?',
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed:
+                                                          () => Navigator.pop(
+                                                            context,
+                                                            false,
+                                                          ),
+                                                      child: const Text('No'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed:
+                                                          () => Navigator.pop(
+                                                            context,
+                                                            true,
+                                                          ),
+                                                      child: const Text('Yes'),
+                                                    ),
+                                                  ],
+                                                ),
+                                          );
+
+                                          if (confirm) {
+                                            await FirebaseFirestore.instance
+                                                .collection('attendance')
+                                                .doc(doc.id)
+                                                .delete();
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Request canceled successfully',
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+
+                                        //     () => updateApproval(doc.id, false),
+                                        // tooltip: "Reject",
                                       ),
                                       SizedBox(width: 8),
                                       ElevatedButton.icon(
