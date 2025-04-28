@@ -97,6 +97,7 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                             user != null ? user['fullName'] : "Unknown";
 
                         return Card(
+                          color: Theme.of(context).colorScheme.secondaryContainer,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -114,11 +115,15 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      IconButton(
+                                      ElevatedButton.icon(
+                                        // style: ElevatedButton.styleFrom(
+                                        //   backgroundColor: Colors.red,
+                                        // ),
                                         icon: Icon(
                                           Icons.close,
                                           color: Colors.red,
                                         ),
+                                        label: Text("Cancel"),
                                         onPressed: () async {
                                           bool confirm = await showDialog(
                                             context: context,
@@ -175,7 +180,10 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                                       ElevatedButton.icon(
                                         onPressed:
                                             () => updateApproval(doc.id, true),
-                                        icon: Icon(Icons.check_circle_outline),
+                                        icon: Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.green,
+                                        ),
                                         label: Text("Approve"),
                                       ),
                                     ],

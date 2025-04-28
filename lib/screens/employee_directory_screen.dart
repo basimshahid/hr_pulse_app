@@ -118,7 +118,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
                     final dept = user['department'];
 
                     return Card(
-                      //color: Theme.of(context).primaryColorLight,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

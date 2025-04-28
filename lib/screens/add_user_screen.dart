@@ -20,6 +20,15 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
   void submitUser() async {
     if (!_formKey.currentState!.validate()) return;
+    final email = emailController.text.trim();
+    final snapshot = await FirebaseFirestore.instance.collection('users').get();
+
+    if (snapshot.docs.any((doc) => doc['email'] == email)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Email already exists")));
+      return;
+    }
 
     setState(() => loading = true);
 

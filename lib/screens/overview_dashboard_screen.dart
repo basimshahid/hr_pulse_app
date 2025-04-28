@@ -12,6 +12,8 @@ class OverviewDashboardScreen extends StatefulWidget {
 }
 
 class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
+  final GlobalKey<SfCartesianChartState> _lateChartKey = GlobalKey();
+  final GlobalKey<SfCartesianChartState> _leaveChartKey = GlobalKey();
   Map<String, int> lateCounts = {};
   Map<String, int> leaveTrends = {};
   int totalAttendance = 0;
@@ -108,6 +110,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
+              color: Theme.of(context).colorScheme.secondaryContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -149,6 +152,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
             ),
             SizedBox(height: 12),
             SfCartesianChart(
+              key: _lateChartKey,
               primaryXAxis: CategoryAxis(),
               series: <CartesianSeries>[
                 ColumnSeries<ChartData, String>(
@@ -182,6 +186,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
                   ),
                 )
                 : SfCartesianChart(
+                  key: _leaveChartKey,
                   primaryXAxis: CategoryAxis(),
                   series: <CartesianSeries>[
                     LineSeries<ChartData, String>(
@@ -204,7 +209,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed:
-                        () => exportOverviewAsPDF(
+                        () =>exportOverviewAsPDF(
                           DashboardData(
                             totalAttendance: totalAttendance,
                             totalLate: totalLate,
@@ -214,7 +219,10 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
                             monthlyLeaves: leaveTrends,
                           ),
                           context,
+                          _lateChartKey,
+                          _leaveChartKey,
                         ),
+                        
                     icon: Icon(Icons.picture_as_pdf),
                     label: Text("Export PDF"),
                   ),
@@ -270,3 +278,4 @@ class DashboardData {
     required this.monthlyLeaves,
   });
 }
+

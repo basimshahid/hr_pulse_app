@@ -18,11 +18,12 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   Map<String, dynamic> benefits = {};
   String name = "", dept = "", role = "";
   bool loading = true;
+  late List<QueryDocumentSnapshot<Map<String, dynamic>>> attendanceData;
+
 
   @override
   void initState() {
     super.initState();
-    print(benefits);
     loadDashboardData();
   }
 
@@ -63,6 +64,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
       onLeave = leaveCount;
       withoutPay = wopCount;
       loading = false;
+      attendanceData  = attendanceSnap.docs;
     });
   }
 
@@ -80,6 +82,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       elevation: 3,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -109,9 +112,25 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                       style: theme.textTheme.titleMedium,
                     ),
                     SizedBox(height: 12),
+                    attendanceData.isEmpty
+                    ? Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.info_outline, size: 48, color: Colors.grey),
+                            const SizedBox(height: 8),
+                            Text(
+                              "No attendance data available.",
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      )
+                    :
                     SfCircularChart(
                       legend: Legend(
                         isVisible: true,
+                        overflowMode: LegendItemOverflowMode.wrap,
                         position: LegendPosition.bottom,
                       ),
                       series: <CircularSeries>[
@@ -134,6 +153,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     Text("Leave Balance", style: theme.textTheme.titleMedium),
                     SizedBox(height: 12),
                     Card(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -145,12 +165,12 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               "Annual",
                               '${leaveBalance['annual']} days left',
                             ),
-                            Divider(),
+                            Divider(color: Colors.black, thickness: 1,),
                             _leaveRow(
                               "Sick",
                               '${leaveBalance['sick']} days left',
                             ),
-                            Divider(),
+                            Divider(color: Colors.black, thickness: 1,),
                             _leaveRow(
                               "Without Pay",
                               '${leaveBalance['withoutPay']} days left',
@@ -163,6 +183,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     Text("Benefits", style: theme.textTheme.titleMedium),
                     SizedBox(height: 8),
                     Card(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -174,12 +195,12 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               "Health Insurance",
                               benefits['healthInsurance'] ? 'Yes' : 'No',
                             ),
-                            Divider(),
+                            Divider(color: Colors.black, thickness: 1,),
                             _leaveRow(
                               "other",
                               benefits['otherBenefit'] ?? 'None',
                             ),
-                            Divider(),
+                            Divider(color: Colors.black, thickness: 1,),
                             _leaveRow("Insurance Claims Filed:", '2'),
                           ],
                         ),

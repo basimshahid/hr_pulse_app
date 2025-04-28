@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:hr_pulse_app/service/notification.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AttendanceMarkingScreen extends StatefulWidget {
   final String markedByUserId;
@@ -81,6 +84,14 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
     if (selectedUserIds.isEmpty ||
         selectedDates.isEmpty ||
         selectedStatus == 'leave' && selectedLeaveType == null) {
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.success(
+      //     message: "Please fill all required fields",
+      //     textStyle: TextStyle(fontSize: 16, color: Colors.white),
+      //     backgroundColor: Colors.black54,
+      //   ),
+      // );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please fill all required fields")),
       );
@@ -111,16 +122,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
           await userRef.update({'leaveBalance': leave});
 
           await checkLeaveBalanceAndNotify(uid, 2);
-
-          // final updatedLeave = leave;
-          // if (updatedLeave['annual'] < 4 ||
-          //     updatedLeave[selectedLeaveType!] < 2) {
-          //   await showLocalNotification(
-          //     title: "Low Leave Balance",
-          //     body:
-          //         "${userDoc['fullName']} is low on leave (${selectedLeaveType!}) or annual.",
-          //   );
-          // }
         }
 
         if (selectedStatus == 'late') {
@@ -130,13 +131,6 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
           await userRef.update({'lateCount': currentLate + 1});
 
           await checkLatenessAndNotify(uid, 5);
-          // if (currentLate + 1 > 4) {
-          //   await showLocalNotification(
-          //     title: "Frequent Lateness",
-          //     body:
-          //         "${userDoc['fullName']} has been late ${currentLate + 1} times!",
-          //   );
-          // }
         }
 
         await firestore.collection('attendance').add(record);
@@ -150,6 +144,16 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
       selectedStatus = 'present';
       selectedLeaveType = null;
     });
+
+    // showTopSnackBar(
+    //   Overlay.of(context),
+    //   CustomSnackBar.success(
+    //     messagePadding: EdgeInsets.symmetric(horizontal: 10),
+    //     message: "Attendance marked successfully",
+    //     textStyle: TextStyle(fontSize: 16, color: Colors.white),
+    //     backgroundColor: Colors.black54,
+    //   ),
+    // );
 
     ScaffoldMessenger.of(
       context,
