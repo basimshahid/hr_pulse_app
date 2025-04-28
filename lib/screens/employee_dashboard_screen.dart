@@ -43,9 +43,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
 
     for (var entry in attendanceSnap.docs) {
       final status = entry['status'];
-      if (status == 'present')
+      if (status == 'present') {
         presentCount++;
-      else if (status == 'late')
+      } else if (status == 'late')
         lateCount++;
       else if (status == 'onLeave') {
         leaveCount++;

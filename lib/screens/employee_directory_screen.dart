@@ -79,8 +79,9 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
               stream:
                   FirebaseFirestore.instance.collection('users').snapshots(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData)
+                if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
+                }
 
                 final docs =
                     snapshot.data!.docs.where((doc) {

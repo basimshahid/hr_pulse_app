@@ -44,7 +44,6 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
       final status = doc['status'];
       final uid = doc['userId'];
       final user = userSnap.docs.firstWhere((u) => u.id == uid);
-      if (user == null) continue;
 
       final dept = user['department'];
       deptTotals[dept] = (deptTotals[dept] ?? 0) + 1;

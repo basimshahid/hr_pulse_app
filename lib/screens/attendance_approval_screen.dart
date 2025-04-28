@@ -33,8 +33,9 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchUsers(),
         builder: (context, userSnap) {
-          if (!userSnap.hasData)
+          if (!userSnap.hasData) {
             return Center(child: CircularProgressIndicator());
+          }
 
           usersMap = userSnap.data!;
 
@@ -68,8 +69,9 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                           .orderBy('date', descending: true)
                           .snapshots(),
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData)
+                    if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
+                    }
 
                     final docs = snapshot.data!.docs;
 

@@ -8,7 +8,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 class AttendanceMarkingScreen extends StatefulWidget {
   final String markedByUserId;
 
-  AttendanceMarkingScreen({required this.markedByUserId});
+  const AttendanceMarkingScreen({super.key, required this.markedByUserId});
 
   @override
   _AttendanceMarkingScreenState createState() =>

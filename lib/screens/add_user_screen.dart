@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddUserScreen extends StatefulWidget {
+  const AddUserScreen({super.key});
+
   @override
   _AddUserScreenState createState() => _AddUserScreenState();
 }
