@@ -36,7 +36,6 @@ Future<void> exportOverviewAsPDF(
 
   double y = 20;
 
-  // Title
   page.graphics.drawString(
     "📊 Company Overview Report",
     titleFont,
@@ -44,7 +43,6 @@ Future<void> exportOverviewAsPDF(
   );
   y += 40;
 
-  // Summary Section
   page.graphics.drawString(
     "📋 Summary Metrics",
     headerFont,
@@ -82,12 +80,10 @@ Future<void> exportOverviewAsPDF(
 
   summaryTable.applyBuiltInStyle(PdfGridBuiltInStyle.listTable4Accent1);
 
-  // ❗ Capture dynamic table position
   final gridResult =
       summaryTable.draw(page: page, bounds: Rect.fromLTWH(0, y, 500, 0))!;
   y = gridResult.bounds.bottom + 20;
 
-  // Now capture Charts
   Future<Uint8List> captureChart(GlobalKey<SfCartesianChartState> key) async {
     final ui.Image? img = await key.currentState!.toImage(pixelRatio: 3.0);
     final ByteData? byteData = await img!.toByteData(
@@ -102,7 +98,6 @@ Future<void> exportOverviewAsPDF(
   final PdfBitmap lateBitmap = PdfBitmap(lateChartImage);
   final PdfBitmap leaveBitmap = PdfBitmap(leaveChartImage);
 
-  // Insert Charts
   page.graphics.drawString(
     "📊 Late Count by Department",
     headerFont,
@@ -120,7 +115,6 @@ Future<void> exportOverviewAsPDF(
   y += 25;
   page.graphics.drawImage(leaveBitmap, Rect.fromLTWH(0, y, 400, 250));
 
-  // Save
   final dir = await getExternalStorageDirectory();
   final file = File("${dir!.path}/overview_report.pdf");
   await file.writeAsBytes(await document.save());
@@ -154,11 +148,9 @@ Future<void> exportOverviewAsCSV(
 
   List<List<dynamic>> csvData = [];
 
-  // Title
   csvData.add(["Company Overview Report"]);
   csvData.add([]);
 
-  // Summary
   csvData.add(["Summary Metrics"]);
   csvData.add(["Metric", "Value"]);
   csvData.add(["Total Attendance Records", data.totalAttendance]);
