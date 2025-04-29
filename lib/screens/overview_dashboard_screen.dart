@@ -44,9 +44,11 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
       final status = doc['status'];
       final uid = doc['userId'];
       final user = userSnap.docs.firstWhere((u) => u.id == uid);
-
       final dept = user['department'];
-      deptTotals[dept] = (deptTotals[dept] ?? 0) + 1;
+
+      if (status != 'onLeave') {
+        deptTotals[dept] = (deptTotals[dept] ?? 0) + 1;
+      }
 
       if (status == 'late') {
         late += 1;
@@ -55,7 +57,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
 
       if (status == 'onLeave') {
         final dateStr = doc['date'];
-        final month = dateStr.substring(0, 7); // yyyy-MM
+        final month = dateStr.substring(0, 7);
         leavesPerMonth[month] = (leavesPerMonth[month] ?? 0) + 1;
       }
     }
@@ -208,7 +210,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed:
-                        () =>exportOverviewAsPDF(
+                        () => exportOverviewAsPDF(
                           DashboardData(
                             totalAttendance: totalAttendance,
                             totalLate: totalLate,
@@ -221,7 +223,7 @@ class _OverviewDashboardScreenState extends State<OverviewDashboardScreen> {
                           _lateChartKey,
                           _leaveChartKey,
                         ),
-                        
+
                     icon: Icon(Icons.picture_as_pdf),
                     label: Text("Export PDF"),
                   ),
@@ -277,4 +279,3 @@ class DashboardData {
     required this.monthlyLeaves,
   });
 }
-
