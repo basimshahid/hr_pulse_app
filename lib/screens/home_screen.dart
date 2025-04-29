@@ -4,6 +4,7 @@ import 'package:hr_pulse_app/screens/attendance_approval_screen.dart';
 import 'package:hr_pulse_app/screens/attendance_marking_screen.dart';
 import 'package:hr_pulse_app/screens/employee_dashboard_screen.dart';
 import 'package:hr_pulse_app/screens/employee_directory_screen.dart';
+import 'package:hr_pulse_app/screens/files_claim_screen.dart';
 import 'package:hr_pulse_app/screens/login_screen.dart';
 import 'package:hr_pulse_app/screens/overview_dashboard_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,6 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
               () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => AddUserScreen()),
+              ),
+        },
+        {
+          'icon': Icons.assignment_turned_in_outlined,
+          'label': 'Claims Filed',
+          'onTap':
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => FilesClaimScreen()),
               ),
         },
       ];
