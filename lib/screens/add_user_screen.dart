@@ -13,9 +13,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final empNoController = TextEditingController();
-  final deptController = TextEditingController();
   final benefitOtherController = TextEditingController();
 
+  String dept = 'IT';
   String role = 'employee';
   bool hasInsurance = false;
   bool loading = false;
@@ -39,7 +39,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         'fullName': nameController.text.trim(),
         'email': emailController.text.trim(),
         'employeeNumber': empNoController.text.trim(),
-        'department': deptController.text.trim(),
+        'department': dept,
         'role': role,
         'lateCount': 0,
         'leaveBalance': {'annual': 20, 'sick': 10, 'withoutPay': 5},
@@ -54,14 +54,21 @@ class _AddUserScreenState extends State<AddUserScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("User added successfully")));
-
-      Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Failed: $e")));
     } finally {
-      setState(() => loading = false);
+      setState(() {
+        loading = false;
+        nameController.clear();
+        emailController.clear();
+        empNoController.clear();
+        benefitOtherController.clear();
+        role = 'employee';
+        dept = 'IT';
+        hasInsurance = false;
+      });
     }
   }
 
@@ -105,7 +112,15 @@ class _AddUserScreenState extends State<AddUserScreen> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(labelText: "Email"),
                         keyboardType: TextInputType.emailAddress,
-                        validator: (v) => v!.isEmpty ? "Required" : null,
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return "Required";
+                          final emailRegex = RegExp(
+                            r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+                          );
+                          if (!emailRegex.hasMatch(v))
+                            return "Invalid email format";
+                          return null;
+                        },
                       ),
                       SizedBox(height: 16),
 
@@ -119,11 +134,19 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       ),
                       SizedBox(height: 16),
 
-                      TextFormField(
-                        controller: deptController,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      DropdownButtonFormField<String>(
+                        value: dept,
                         decoration: InputDecoration(labelText: "Department"),
-                        validator: (v) => v!.isEmpty ? "Required" : null,
+                        items:
+                            ['IT', 'HR', 'Sales', 'Finance', 'Operations']
+                                .map(
+                                  (d) => DropdownMenuItem(
+                                    value: d,
+                                    child: Text(d),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (val) => setState(() => dept = val!),
                       ),
                       SizedBox(height: 16),
 
