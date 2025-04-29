@@ -99,7 +99,8 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                             user != null ? user['fullName'] : "Unknown";
 
                         return Card(
-                          color: Theme.of(context).colorScheme.secondaryContainer,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -159,24 +160,77 @@ class _AttendanceApprovalScreenState extends State<AttendanceApprovalScreen> {
                                           );
 
                                           if (confirm) {
+                                            final attendanceId = doc.id;
+                                            final userId = doc['userId'];
+                                            final status = doc['status'];
+                                            final data =
+                                                doc.data()
+                                                    as Map<String, dynamic>;
+                                            final leaveType =
+                                                data.containsKey('leaveType')
+                                                    ? data['leaveType']
+                                                    : null;
+
+                                            final userRef = FirebaseFirestore
+                                                .instance
+                                                .collection('users')
+                                                .doc(userId);
+                                            final userSnap =
+                                                await userRef.get();
+                                            if (userSnap.exists) {
+                                              final userData = userSnap.data()!;
+                                              final leaveBalance =
+                                                  Map<String, dynamic>.from(
+                                                    userData['leaveBalance'] ??
+                                                        {},
+                                                  );
+                                              int lateCount =
+                                                  userData['lateCount'] ?? 0;
+
+                                              if (status == 'late' &&
+                                                  lateCount > 0) {
+                                                lateCount -= 1;
+                                              }
+
+                                              if (status == 'onLeave') {
+                                                if (leaveType != null &&
+                                                    leaveBalance.containsKey(
+                                                      leaveType,
+                                                    )) {
+                                                  leaveBalance[leaveType] =
+                                                      (leaveBalance[leaveType] ??
+                                                          0) +
+                                                      1;
+                                                }
+
+                                                leaveBalance['annual'] =
+                                                    (leaveBalance['annual'] ??
+                                                        0) +
+                                                    1;
+                                              }
+
+                                              await userRef.update({
+                                                'lateCount': lateCount,
+                                                'leaveBalance': leaveBalance,
+                                              });
+                                            }
+
                                             await FirebaseFirestore.instance
                                                 .collection('attendance')
-                                                .doc(doc.id)
+                                                .doc(attendanceId)
                                                 .delete();
+
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
                                               const SnackBar(
                                                 content: Text(
-                                                  'Request canceled successfully',
+                                                  'Request canceled and user updated',
                                                 ),
                                               ),
                                             );
                                           }
                                         },
-
-                                        //     () => updateApproval(doc.id, false),
-                                        // tooltip: "Reject",
                                       ),
                                       SizedBox(width: 8),
                                       ElevatedButton.icon(
