@@ -51,6 +51,7 @@ Future<void> exportOverviewAsPDF(
   y += 25;
 
   final summaryTable = PdfGrid();
+
   summaryTable.columns.add(count: 2);
   summaryTable.headers.add(1);
   summaryTable.headers[0].cells[0].value = "Metric";
