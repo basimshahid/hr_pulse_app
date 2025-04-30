@@ -105,7 +105,7 @@ class FilesClaimScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ],
-                                ),
+                                ), 
                               ),
                           ],
                         ),
